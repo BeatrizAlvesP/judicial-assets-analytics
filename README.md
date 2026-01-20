@@ -31,3 +31,8 @@ pip install -r requirements.txt
 python app.py
 
 Acesse: http://127.0.0.1:5000/judicial-assets
+
+## 📸 Screenshots
+![Visão Geral](screenshots/dashboard_overview.png)
+![Gráficos](screenshots/dashboard_charts.png)
+![Ativos](screenshots/emissions_cards.png)
