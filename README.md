@@ -25,14 +25,14 @@ em contextos de investimento estruturado.
 Todos os dados utilizados neste projeto são **100% fictícios** e foram
 criadas exclusivamente para fins educacionais e demonstrativos.
 
+## 📸 Screenshots
+![Visão Geral](screenshots/dashboard_overview.png)
+![Gráficos](screenshots/dashboard_charts.png)
+![Ativos](screenshots/emissions_cards.png)
+
 ## ▶️ Como executar
 ```bash
 pip install -r requirements.txt
 python app.py
 
 Acesse: http://127.0.0.1:5000/judicial-assets
-
-## 📸 Screenshots
-![Visão Geral](screenshots/dashboard_overview.png)
-![Gráficos](screenshots/dashboard_charts.png)
-![Ativos](screenshots/emissions_cards.png)
