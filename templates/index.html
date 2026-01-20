@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Judicial Assets Analytics</title>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  <!-- JSON do back-end (NÃO RE-CALCULAR NO FRONT) -->
+  <script type="application/json" id="dados-json">{{ dados|tojson }}</script>
+  <script type="application/json" id="indicadores-json">{{ indicadores|tojson }}</script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="header">
+      <h1>Judicial Assets Analytics</h1>
+      <p>Dashboard para análise de ativos judiciais e risco de portfólio.</p>
+    </div>
+
+    <div class="content">
+
+      <!-- ==============================
+           Filtros / busca
+           ============================== -->
+      <section class="search-section" aria-labelledby="filtros-title">
+        <h2 id="filtros-title" class="sr-only">Filtros</h2>
+        <form class="search-form">
+          <div class="form-group">
+            <label for="codigo">🔍 Código:</label>
+            <input list="lista-codigo" id="codigo" name="codigo" class="form-control"
+              placeholder="Digite ou selecione um código">
+            <datalist id="lista-codigo">
+              {% for codigo in codigos %}
+              <option value="{{ codigo }}"></option>
+              {% endfor %}
+            </datalist>
+          </div>
+
+          <div class="form-group">
+            <label for="filterCenario">📊 Cenário:</label>
+            <select id="filterCenario" name="filterCenario" class="form-control">
+              <option value="">Todos</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="filterEmissao">📑 Emissão:</label>
+            <select id="filterEmissao" name="filterEmissao" class="form-control">
+              <option value="">Todas</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn">Consultar</button>
+        </form>
+      </section>
+
+      <!-- ==============================
+           BLOCO 1 — VISÃO GERAL
+           ============================== -->
+      <section class="section" aria-labelledby="overview-title">
+        <h2 id="overview-title" class="section-title">📊 Visão Geral</h2>
+
+        <div id="results" class="results-section" style="display:block;">
+          <div class="stats-grid">
+            <!-- Total Distribuído -->
+            <div class="stat-card">
+              <div class="stat-label">Valor Distribuído</div>
+              <div class="stat-value" id="valorDistribuido">R$ 0,00</div>
+            </div>
+
+            <!-- Valor Real Total -->
+            <div class="stat-card">
+              <div class="stat-label">Valor de Face do Portfólio</div>
+              <div class="stat-value" id="valorRealTotal">R$ 0,00</div>
+            </div>
+
+            <!-- Tempo Médio -->
+            <div class="stat-card">
+              <div class="stat-label">Prazo Médio</div>
+              <div class="stat-value"><span id="tempoMédio">0.0</span> meses</div>
+            </div>
+
+            <!-- Total Tokens -->
+            <div class="stat-card">
+              <div class="stat-label">Total de Ativos</div>
+              <div class="stat-value" id="totalTokenDash">0</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================
+           BLOCO 2 — ALERTAS DE RISCO
+           ========================== -->
+      <section class="section-risco" aria-labelledby="risco-title">
+        <h2 id="risco-title" class="section-title-risco">🚨 Alertas de Risco</h2>
+
+        <div id="alert" class="alert-grid" style="display: block;">
+          <div class="stats-grid-risco">
+            <div class="stat-card-risco">
+              <div class="stat-label-risco">Ativos sem Lastro</div>
+              <div class="stat-value-risco" id="totalTokenSemValor">0</div>
+            </div>
+
+            <div class="stat-card-risco">
+              <div class="stat-label-risco">Valor em Risco</div>
+              <div class="stat-value-risco" id="valorSemLastro">R$ 0,00</div>
+            </div>
+
+            <div class="stat-card-risco">
+              <div class="stat-label-risco">% da Carteira em Risco</div>
+              <div class="stat-value-risco"><span id="participacaoDoLastro">0.0</span>%</div>
+            </div>
+
+            <div class="stat-card-risco">
+              <div class="stat-label-risco">Processos Pendentes</div>
+              <div class="stat-value-risco" id="qtdDePastas">0</div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ==============================
+           BLOCO 3 — GRÁFICOS
+           ============================== -->
+      <section aria-labelledby="charts-title">
+        <h2 id="charts-title" class="sr-only">Gráficos</h2>
+
+        <div class="charts-grid">
+          <!-- Risco vs. Valor -->
+          <div class="chart-container chart-card">
+            <div class="chart-title">📈 Valor em Risco vs Exposição</div>
+            <div class="chart-holder">
+              <canvas id="riscoValorChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Ranking de Maiores Valores em Risco -->
+          <div class="chart-container chart-card">
+            <div class="chart-title">🎯 Ranking de Ativos com Maior Risco</div>
+            <div class="chart-holder--tall">
+              <canvas id="rankingRiscoChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Matriz de Prioridade (Impacto x Urgência) -->
+          <div class="chart-container chart-card">
+            <div class="chart-title">🔥 Matriz de Prioridade – Prazo x Exposição</div>
+            <div class="chart-holder">
+              <canvas id="matrizChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Risco por fase-->
+          <div class="chart-container chart-card">
+            <div class="chart-title">📊 Risco por Fase do Ativo</div>
+            <div class="chart-holder">
+              <canvas id="riscoStatusChart"></canvas>
+            </div>
+          </div>
+
+          <!-- % Distribuído vs. % PP -->
+          <div class="chart-container charts-card">
+            <div class="chart-title">📊 Percentual Distribuído por Fase</div>
+            <div class="chart-holder">
+              <canvas id="retornoRiscoChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==============================
+           BLOCO 4 — CARDS POR EMISSÃO
+           ============================== -->
+      <section id="sec-card-emissoes">
+        <!-- Cabeçalho e controles -->
+        <div class="cards-header">
+          <h4>🎯 Análise por Emissão</h4>
+
+          <div class="cards-controls">
+            <span id="infoRegistros">Mostrando 0-0 de 0 emissões</span>
+            <div class="cards-pager">
+              <button type="button" onclick="paginaAnterior()" id="btnAnterior">← Anterior</button>
+              <button type="button" onclick="proximaPagina()" id="btnProximo">Próximo →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grid dos cards -->
+        <div id="cardsEmissoes" class="cards-grid"></div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</body>
+
+</html>

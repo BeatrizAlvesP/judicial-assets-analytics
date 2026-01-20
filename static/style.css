@@ -1,0 +1,515 @@
+/* ==============================
+   Base / Tipografia / Cores
+   ============================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root{
+  /* Paleta base */
+  --accent: #ffbf00;           /* amarelo mais quente para gradientes ou detalhes */
+  --bg: #0b0b0b;               /* preto de fundo */
+  --text: #ffffff;             /* texto principal branco */
+  --muted: #cbd5e1;            /* texto secundário/cinza claro */
+
+  /* Cores principais */
+  --primary: #ffd700;          /* amarelo principal (ouro) */
+  --primary-100: #fff8c6;      /* amarelo claro para fundos */
+  --primary-hover: #e6c200;    /* amarelo escurecido para hover */
+
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --indigo: #6366f1;
+
+/* Elementos de interface */
+  --card: #111213;             /* cards escuros */
+  --card-contrast: #1a1a1a;    /* contraste suave no card escuro */
+  --border: #2d2f36;           /* borda em cinza-escuro */
+  --border-contrast: #ffd70044;/* borda sutil amarelada */
+
+  --shadow-sm: 0 2px 6px rgba(0,0,0,.05);
+  --shadow-md: 0 4px 8px rgba(0,0,0,.08);
+
+  /* Efeitos */
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  --radius: 14px;
+}
+
+
+html, body{ height: 100%; }
+body{
+  margin: 0;
+  background: #000;          /* fundo escuro como você usa */
+  color: #fff;               /* texto padrão no fundo escuro */
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+/* Acessibilidade – você usa .sr-only no HTML */
+.sr-only{
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0);
+  white-space: nowrap; border: 0;
+}
+
+/* ==============================
+   Layout
+   ============================== */
+
+.container{ max-width: 1400px; margin: 0 auto; padding: 24px; }
+.content{ margin-top: 20px; }
+
+
+/* Header com gradiente, mantendo .header */
+.header{
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+  color: #000;
+  padding: 24px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 10px 30px rgba(118,75,162,.25);
+  border-radius: 0 0 18px 18px;
+}
+
+
+.header h1{ margin: 0 0 6px 0; font-size: 28px; font-weight: 700; }
+.header p{ font-size: 1.1rem; margin: 0; opacity: .95; }
+
+/* ==============================
+   Filtros / Busca
+   ============================== */
+.search-section{
+  background: var(--card-contrast);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 18px;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+.search-form{
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 14px;
+  align-items: end;
+  padding: 10px 12px;
+
+}
+
+.form-group{ grid-column: span 4; }
+@media (max-width: 900px){ .form-group{ grid-column: span 12; } }
+
+.form-group label{
+  display: block; font-size: 13px; color: var(--muted);
+  margin-bottom: 6px; font-weight: 600;
+}
+
+.form-group label{
+  display:block; font-size:13px; color: var(--muted);
+  margin-bottom:6px; font-weight:600;
+}
+
+.form-control,
+.search-form input[list],
+.search-form select{
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #222222;
+  color: var(--text);
+  outline: none;
+  transition: box-shadow .2s, border-color .2s;
+}
+
+.search-form input[list]:focus,
+.search-form select:focus{
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px #444444;
+}
+
+.search-form .form-group:nth-child(1){
+  margin-right: 30px; /* ajuste a gosto */
+}
+
+.btn{
+  appearance: none;
+  border: 1px solid var(--primary);
+  background: var(--primary);
+  color: #000;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: filter .15s ease, transform .15s ease, box-shadow .15s ease;
+}
+
+.btn:hover{
+  filter: brightness(1.03);
+  background: var(--warning);
+  box-shadow: 0 10px 20px rgba(230,194,0,.4);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 900px){ .form-group{ grid-column: span 12; } }
+
+/* ==============================
+   Cards topo
+   ============================== */
+
+.section{ margin-top: 20px; }
+.section-title{
+  color:#e5e7eb;             /* título sobre fundo escuro */
+  font-size: 18px; font-weight:700;
+  margin: 0 0 12px 0;
+}
+
+.results-section{ display:block; }
+
+.stats-grid{
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.stat-card{
+  grid-column: span 3;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 16px;
+  color: var(--text);
+}
+
+.stat-label{ font-size: 13px; color: var(--muted); margin-bottom: 6px; font-weight: 600; }
+.stat-value{ font-size: 22px; font-weight: 800; color: var(--text); }
+
+@media (max-width: 1100px){ .stat-card{ grid-column: span 6; } }
+@media (max-width: 640px){ .stat-card{ grid-column: span 12; } }
+
+/* ==============================
+   Bloco 2 — Alertas de Risco (refinado)
+   ============================== */
+
+.section-risco{ margin-top: 8px; margin-bottom: 28px; }
+.section-title-risco{
+  color:#e5e7eb; font-size:18px; font-weight:700; margin:0 0 12px 0;
+}
+.alert-grid{ display:block; }
+
+/* grade */
+.stats-grid-risco{
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap:16px;
+  margin-bottom: 20px;
+}
+
+/* BASE: cinza MAIS claro + degradê + ring discreto */
+.stat-card-risco{
+  grid-column: span 3;
+  background:
+    linear-gradient(180deg, #1f2026 0%, #17181d 100%); /* + claro que var(--card) */
+  border: 1px solid rgba(255,255,255,.04);
+  border-left: 5px solid var(--primary);
+  border-radius: 16px;
+  padding: 16px;
+  color: var(--text);
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.18),
+    inset 0 1px 0 rgba(255,255,255,.03);             /* top highlight */
+  position: relative;
+  overflow: hidden;
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+/* HOVER: elevação + ring dourado */
+.stat-card-risco:hover{
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 34px rgba(0,0,0,.28),
+    0 0 0 2px rgba(255,215,0,.10);
+}
+
+/* tipografia com contraste */
+.stat-label-risco{
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary-100); /* dourado claro */
+  letter-spacing: .2px;
+  margin-bottom: 6px;
+}
+.stat-value-risco{
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.1;
+  opacity: .98;
+}
+
+/* “bloom” suave no canto superior direito (não clareia o card inteiro) */
+.stat-card-risco::after{
+  content:"";
+  position:absolute;
+  top:-24px; right:-24px;
+  width:110px; height:110px; border-radius:9999px;
+  background: radial-gradient(closest-side, rgba(255,215,0,.12), transparent 70%);
+  pointer-events:none;
+  filter: blur(.2px);
+}
+
+/* TONS por card + ring/glow da cor do alerta */
+.stats-grid-risco .stat-card-risco:nth-child(1){ /* danger */
+  border-left-color:#ef4444;
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.18),
+    0 0 0 1px rgba(239,68,68,.10);
+}
+.stats-grid-risco .stat-card-risco:nth-child(1)::after{
+  background: radial-gradient(closest-side, rgba(239,68,68,.16), transparent 70%);
+}
+
+.stats-grid-risco .stat-card-risco:nth-child(2){ /* warning */
+  border-left-color:#f59e0b;
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.18),
+    0 0 0 1px rgba(245,158,11,.10);
+}
+.stats-grid-risco .stat-card-risco:nth-child(2)::after{
+  background: radial-gradient(closest-side, rgba(245,158,11,.16), transparent 70%);
+}
+
+.stats-grid-risco .stat-card-risco:nth-child(3){ /* identidade dourado */
+  border-left-color: var(--primary);
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.18),
+    0 0 0 1px rgba(255,215,0,.12);
+}
+.stats-grid-risco .stat-card-risco:nth-child(3)::after{
+  background: radial-gradient(closest-side, rgba(255,215,0,.18), transparent 70%);
+}
+
+.stats-grid-risco .stat-card-risco:nth-child(4){ /* roxo informativo */
+  border-left-color:#8b5cf6;
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.18),
+    0 0 0 1px rgba(139,92,246,.10);
+}
+.stats-grid-risco .stat-card-risco:nth-child(4)::after{
+  background: radial-gradient(closest-side, rgba(139,92,246,.16), transparent 70%);
+}
+
+/* responsivo */
+@media (max-width:1100px){ .stat-card-risco{ grid-column: span 6; } }
+@media (max-width:640px){ .stat-card-risco{ grid-column: span 12; } }
+
+/* ==============================
+   Gráficos
+   ============================== */
+.charts-grid{
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.chart-container{
+  background: var(--card);
+  border-color: rgba(255,215,0,.22);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 24px rgba(0,0,0,.18);
+  padding: 16px;
+  color: var(--text);
+  grid-column: span 12;
+}
+
+/* você usa as duas variantes no HTML */
+.chart-card, .charts-card{ overflow: hidden; }
+
+
+.chart-title{ font-weight:700; margin-bottom:10px; color: var(--text) !important;}
+
+.chart-holder{ height: 260px; }
+.chart-holder--tall{ height: 360px; }
+
+.chart-holder canvas,
+.chart-holder--tall canvas{
+  width:100% !important;
+  height:100% !important;
+  display:block;
+}
+
+/* top row */
+.charts-grid .chart-container:nth-child(1),
+.charts-grid .chart-container:nth-child(2){ grid-column: span 6; }
+.charts-grid .chart-container:nth-child(3){ grid-column: span 12; }
+
+@media (max-width: 900px){
+  .charts-grid .chart-container:nth-child(1),
+  .charts-grid .chart-container:nth-child(2),
+  .charts-grid .chart-container:nth-child(3){ grid-column: span 12; }
+}
+
+/* (NOVO) holders de altura fixa + prevenção de overflow */
+.chart-card{ overflow: hidden; }
+.chart-holder{ height: 260px; }
+.chart-holder--tall{ height: 360px; }
+.chart-holder canvas,
+.chart-holder--tall canvas{
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* ==============================
+   Bloco 4 — Cards por Emissão
+   ============================== */
+
+#sec-card-emissoes{
+  background: var(--card-contrast);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  padding: 16px;
+  margin: 20px 0;
+  color: var(--text);
+}
+
+/* Cabeçalho e controles */
+.cards-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.cards-header h4{ margin:0; font-size:18px; font-weight:700; color:var(--text); }
+
+#sec-card-emissoes h4{ margin: 0 0 10px 0; font-size: 18px; font-weight: 700; }
+
+.cards-controls #infoRegistros{ font-size: 13px; color: var(--muted); }
+
+.cards-controls{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  color:#374151;
+}
+
+#cardsEmissoes{
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 12px;
+}
+
+#cardsEmissoes.cards-grid > div{
+  grid-column: span 3;
+  background:#fff;
+  border:1px solid var(--border);
+  border-left:4px solid #ffd700;   /* destaque dourado do seu tema original */
+  border-radius:12px;
+  padding:12px;
+  color:#111827;
+  box-shadow: var(--shadow-sm);
+}
+
+
+#cardsEmissoes h5{ margin:0 0 6px 0; font-size:15px; font-weight:700; color:#111827; }
+#cardsEmissoes .text-xs{ font-size:12px; }
+#cardsEmissoes .text-gray-600{ color:#4b5563; }
+#cardsEmissoes .text-blue-600{ color:#2563eb; font-weight:600; }
+#cardsEmissoes .text-red-600{ color:#dc2626; font-weight:600; }
+
+#cardsEmissoes .text-line,
+#cardsEmissoes div div{ font-size: 13px; color: #334155; }
+
+@media (max-width:1200px){ #cardsEmissoes.cards-grid > div{ grid-column: span 4; } }
+@media (max-width:900px){ #cardsEmissoes.cards-grid > div{ grid-column: span 6; } }
+@media (max-width:640px){ #cardsEmissoes.cards-grid > div{ grid-column: span 12; } }
+
+/* Grid de cards gerados pelo JS */
+.cards-grid{
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap:12px;
+}
+
+/* Paginação */
+.cards-pager{ display:flex; gap:8px; }
+#btnAnterior, #btnProximo{
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--primary-100);
+  color: #000;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  box-shadow: 0 10px 20px rgba(230,194,0,.4);
+  transition: background .15s, color .15s, opacity .15s;
+}
+
+#btnAnterior:hover{ background:#d1d5db; }
+
+#btnProximo{
+  background: var(--primary);
+  color: #000;
+  border-color: var(--primary);
+}
+
+#btnProximo:hover{ background: var(--primary-hover); }
+
+#btnAnterior[disabled], #btnProximo[disabled]{ opacity: .5; cursor: not-allowed; }
+
+/* Utilidades */
+.hidden{ display: none !important; }
+.card-shadow{ box-shadow: var(--shadow); }
+
+
+/* Cores dos chips criados via innerHTML (classes tailwind-like simuladas) */
+.bg-red-50{ background:#fef2f2; }
+.bg-orange-50{ background:#fff7ed; }
+.bg-yellow-50{ background:#fffbeb; }
+.bg-purple-50{ background:#f5f3ff; }
+.bg-green-100{ background:#dcfce7; }
+.bg-red-100{ background:#fee2e2; }
+.bg-orange-100{ background:#ffedd5; }
+.bg-yellow-100{ background:#fef3c7; }
+.bg-purple-100{ background:#e9d5ff; }
+.bg-gray-100{ background:#f5f5f5; }
+
+.text-red-800{ color:#991b1b; }
+.text-orange-800{ color:#9a3412; }
+.text-yellow-800{ color:#92400e; }
+.text-green-800{ color:#065f46; }
+.text-purple-800{ color:#6b21a8; }
+.text-gray-800{ color:#1f2937; }
+
+.border-red-500{ border-color:#ef4444 !important; }
+.border-orange-500{ border-color:#f59e0b !important; }
+.border-yellow-500{ border-color:#eab308 !important; }
+.border-purple-500{ border-color:#8b5cf6 !important; }
+.border-gray-300{ border-color:#d1d5db !important; }
+
+/* Utilitários mínimos que seu JS/HTML usam */
+.p-3{ padding: .75rem; }
+.rounded-lg{ border-radius: .75rem; }
+.border-l-4{ border-left-width: 4px; }
+.mb-1{ margin-bottom:.25rem; }
+.mb-2{ margin-bottom:.5rem; }
+.flex{ display:flex; }
+.gap-1{ gap:.25rem; }
+.gap-2{ gap:.5rem; }
+.items-start{ align-items:flex-start; }
+.items-center{ align-items:center; }
+.justify-between{ justify-content:space-between; }
+.font-semibold{ font-weight:600; }
+.text-sm{ font-size:.875rem; }
+.text-lg{ font-size:1.125rem; }
+.px-2{ padding-left:.5rem; padding-right:.5rem; }
+.py-1{ padding-top:.25rem; padding-bottom:.25rem; }
+.rounded-full{ border-radius:9999px; }
